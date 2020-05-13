@@ -16,9 +16,11 @@ import tshirtstrategy.models.Size;
 public class BankPaymentImpl implements IPayment {
 
     @Override
-    public float pay(Color color, Size size, Fabric fabric) {
-        float result = 0;
+    public float pay(float basePrice, Color color, Size size, Fabric fabric) {
+        float result = basePrice;
         // implementation via Cards
+        result += color.getColorPrice(color.ordinal());
+        // + 5%
         return result;
     }
     

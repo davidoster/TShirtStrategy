@@ -14,6 +14,6 @@ import tshirtstrategy.models.Size;
  * @author mac
  */
 public interface IPayment {
-    float pay(Color color, Size size, Fabric fabric);
+    float pay(float basePrice, Color color, Size size, Fabric fabric);
     
 }

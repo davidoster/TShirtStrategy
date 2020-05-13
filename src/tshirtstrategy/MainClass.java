@@ -9,6 +9,8 @@ import tshirtstrategy.models.Color;
 import tshirtstrategy.models.Fabric;
 import tshirtstrategy.models.Size;
 import tshirtstrategy.models.TShirt;
+import tshirtstrategy.strategy.CardPaymentImpl;
+import tshirtstrategy.strategy.IPayment;
 
 /**
  *
@@ -21,7 +23,11 @@ public class MainClass {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        TShirt tShirt = new TShirt("AAA", Color.ORANGE, Size.XL, Fabric.LINEN, 15);
+        TShirt tShirt = new TShirt("AAA", Color.ORANGE, Size.XL, Fabric.LINEN, 0);
+        IPayment payment  = new CardPaymentImpl();
+        float price = payment.pay(tShirt.getPrice(), tShirt.getColor(), tShirt.getSize(), tShirt.getFabric());
+        System.out.println("price: " + price);
+        
        
     }
     
