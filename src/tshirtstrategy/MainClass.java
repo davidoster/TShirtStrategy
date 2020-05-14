@@ -30,24 +30,22 @@ public class MainClass {
     public static void main(String[] args) {
         // TODO code application logic here
         TShirt tShirt = new TShirt("AAA", Color.ORANGE, Size.XL, Fabric.LINEN,11);
-//        Context cardPaymentContext = new Context(new CardPaymentImpl());
-//        float price1 = cardPaymentContext.executePayment(tShirt.getPrice(), tShirt.getColor(), tShirt.getSize(), tShirt.getFabric());
-//        System.out.println("price by Card Payment: " + price1);
-//        
-//        Context bankPaymentContext = new Context(new BankPaymentImpl());
-//        float price2 = bankPaymentContext.executePayment(tShirt.getPrice(), tShirt.getColor(), tShirt.getSize(), tShirt.getFabric());
-//        System.out.println("price by Bank Payment: " + price2);
-//        
-//        Context cashPaymentContext = new Context(new CashPaymentImpl());
-//        float price3 = cashPaymentContext.executePayment(tShirt.getPrice(), tShirt.getColor(), tShirt.getSize(), tShirt.getFabric());
-//        System.out.println("price by Cash Payment: " + price3);
-        
+       
         System.out.println(" // ----------- //");
-        IPayment p[] = new IPayment[] {new CardPaymentImpl(), new BankPaymentImpl(), new CashPaymentImpl()};
-        List<IPayment> payments = Arrays.asList(p);   // new ArrayList<>();
+        List<IPayment> payments = Arrays.asList(new IPayment[] {new CardPaymentImpl(), new BankPaymentImpl(), new CashPaymentImpl()});   // new ArrayList<>();
         HashMap<String, Float> allPayments = new HashMap<>();
         Context contextAll = new Context(payments);
-        allPayments = contextAll.executePayments(tShirt.getPrice(), tShirt.getColor(), tShirt.getSize(), tShirt.getFabric());
+        allPayments = contextAll.executePayments(tShirt.getPrice(), 
+          tShirt.getColor(), tShirt.getSize(), tShirt.getFabric());
+        
+        /*
+            from HashMap<String, Float> tht is filled from executePayments....
+            we ask for a Set which contains a
+            Map<String, Float>
+            On this Map we call forEach in order to iterate within the Map
+            Map.forEach returns an entry within the Map
+        
+        */
         
         allPayments.entrySet().forEach(
             entry->
@@ -57,19 +55,6 @@ public class MainClass {
         
         
         System.out.println(" // ----------- //");
-//        float price = 0;
-//        IPayment cardPayment  = new CardPaymentImpl();
-//        price = cardPayment.pay(tShirt.getPrice(), tShirt.getColor(), tShirt.getSize(), tShirt.getFabric());
-//        System.out.println("price by Card Payment: " + price);
-//        
-//        IPayment bankPayment = new BankPaymentImpl();
-//        price = bankPayment.pay(tShirt.getPrice(), tShirt.getColor(), tShirt.getSize(), tShirt.getFabric());
-//        System.out.println("price by Bank Payment: " + price);
-//        
-//        IPayment cashPayment = new CashPaymentImpl();
-//        price = cashPayment.pay(tShirt.getPrice(), tShirt.getColor(), tShirt.getSize(), tShirt.getFabric());
-//        System.out.println("price by Cash Payment: " + price);
-        
        
     }
     
