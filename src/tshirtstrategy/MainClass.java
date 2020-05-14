@@ -9,7 +9,9 @@ import tshirtstrategy.models.Color;
 import tshirtstrategy.models.Fabric;
 import tshirtstrategy.models.Size;
 import tshirtstrategy.models.TShirt;
+import tshirtstrategy.strategy.BankPaymentImpl;
 import tshirtstrategy.strategy.CardPaymentImpl;
+import tshirtstrategy.strategy.CashPaymentImpl;
 import tshirtstrategy.strategy.IPayment;
 
 /**
@@ -23,10 +25,18 @@ public class MainClass {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        TShirt tShirt = new TShirt("AAA", Color.ORANGE, Size.XL, Fabric.LINEN, 0);
-        IPayment payment  = new CardPaymentImpl();
-        float price = payment.pay(tShirt.getPrice(), tShirt.getColor(), tShirt.getSize(), tShirt.getFabric());
-        System.out.println("price: " + price);
+        TShirt tShirt = new TShirt("AAA", Color.ORANGE, Size.XL, Fabric.LINEN,11);
+        IPayment cardPayment  = new CardPaymentImpl();
+        float price = cardPayment.pay(tShirt.getPrice(), tShirt.getColor(), tShirt.getSize(), tShirt.getFabric());
+        System.out.println("price by Card Payment: " + price);
+        
+        IPayment bankPayment = new BankPaymentImpl();
+        price = bankPayment.pay(tShirt.getPrice(), tShirt.getColor(), tShirt.getSize(), tShirt.getFabric());
+        System.out.println("price by Bank Payment: " + price);
+        
+        IPayment cashPayment = new CashPaymentImpl();
+        price = cashPayment.pay(tShirt.getPrice(), tShirt.getColor(), tShirt.getSize(), tShirt.getFabric());
+        System.out.println("price by Cash Payment: " + price);
         
        
     }

@@ -25,11 +25,12 @@ Fabric, {WOOL, COTTON, POLYESTER, RAYON, LINEN, CASHMERE, SILK}
 */
 
 public class TShirt {
+    private float basePrice = 10;
     private String name;
     private Color color;
     private Size size;
     private Fabric fabric;
-    private float price = 10;
+    private float price;
 
     public TShirt() {
     }
@@ -50,7 +51,7 @@ public class TShirt {
     // setPrice(22.75)
     // price 10+22.75 = 32.75 
     public void setPrice(float price) {
-        this.price += price;
+        this.price = this.basePrice + price;
     }
 
     public String getName() {
