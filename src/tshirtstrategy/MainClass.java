@@ -5,6 +5,7 @@
  */
 package tshirtstrategy;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -29,17 +30,17 @@ public class MainClass {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        TShirt tShirt = new TShirt("AAA", Color.ORANGE, Size.XL, Fabric.LINEN, 11);
+//        TShirt tShirt = new TShirt("AAA", Color.ORANGE, Size.XL, Fabric.LINEN, 11);
        
-        System.out.println(" // ----------- //");
-        List<IPayment> payments = Arrays.asList(new IPayment[] {new CardPaymentImpl(), new BankPaymentImpl(), new CashPaymentImpl()});   // new ArrayList<>();
-        HashMap<String, Float> allPayments = new HashMap<>();
-        Context contextAll = new Context(payments);
-        allPayments = contextAll.executePayments(tShirt.getPrice(), 
-          tShirt.getColor(), tShirt.getSize(), tShirt.getFabric());
-        
-        HashMap<String, Float> allPayments2 = generateTShirtAndStategies();
-        
+//        System.out.println(" // ----------- //");
+//        List<IPayment> payments = Arrays.asList(new IPayment[] {new CardPaymentImpl(), new BankPaymentImpl(), new CashPaymentImpl()});   // new ArrayList<>();
+//        HashMap<String, Float> allPayments = new HashMap<>();
+//        Context contextAll = new Context(payments);
+//        allPayments = contextAll.executePayments(tShirt.getPrice(), 
+//          tShirt.getColor(), tShirt.getSize(), tShirt.getFabric());
+//        
+//        HashMap<String, Float> allPayments2 = generateTShirtAndStategies();
+//        
         /*
             from HashMap<String, Float> tht is filled from executePayments....
             we ask for a Set which contains a
@@ -49,24 +50,58 @@ public class MainClass {
         
         */
         
-        allPayments.entrySet().forEach(
-            entry->
+//        allPayments.entrySet().forEach(
+//            entry->
+//            {
+//                System.out.println(entry.getKey() + " Price: " + entry.getValue());  
+//            });
+        
+        
+//        System.out.println(" // ----------- //");
+        
+//        allPayments2.entrySet().forEach(
+//            entry->
+//            {
+//                System.out.println(entry.getKey() + " Price: " + entry.getValue());  
+//            });
+        
+        
+//        System.out.println(" // ----------- //");
+        generateTShirtsAndStrategies(15).forEach(action->
+        {
+            System.out.println(" // ----------- //");
+            action.entrySet().forEach(entry->
             {
-                System.out.println(entry.getKey() + " Price: " + entry.getValue());  
+                System.out.println(entry.getKey() + " Price: " + entry.getValue());
             });
+        });
         
+        // getAllPossibleCombinations fo TShirts and implement all strategies
         
-        System.out.println(" // ----------- //");
-        
-        allPayments2.entrySet().forEach(
-            entry->
-            {
-                System.out.println(entry.getKey() + " Price: " + entry.getValue());  
-            });
-        
-        
-        System.out.println(" // ----------- //");
-       
+        List<TShirt> tShirts = new ArrayList<TShirt>();
+        // Color
+        for (int i = 0; i < 7; i++) {
+            Color color = Color.values()[i];
+            // Size
+            for (int j = 0; j < 7; j++) {
+                Size size = Size.values()[j];
+                // Fabric
+                for (int k = 0; k < 7; k++) {
+                    Fabric fabric = Fabric.values()[k];
+                    tShirts.add(new TShirt(getRandomName(), color, size, fabric, getRandomNumberInRange(0,20)));
+                }
+                
+            }
+            
+        }
+    }
+    
+    public static List<HashMap<String, Float>> generateTShirtsAndStrategies(int noOfTShirts) {
+        List<HashMap<String, Float>> aaa = new ArrayList<HashMap<String, Float>>();
+        for(int i = 0; i < noOfTShirts; i++) {
+            aaa.add(generateTShirtAndStategies());
+        }
+        return(aaa);
     }
     
     public static HashMap<String, Float> generateTShirtAndStategies() {
