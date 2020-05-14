@@ -39,7 +39,7 @@ public class TShirt {
         this.color = color;
         this.size = size;
         this.fabric = fabric;
-        this.price = price;
+        setPrice(price); // this.price = price; this is wrong!!!
     }
 
     public float getPrice() {
