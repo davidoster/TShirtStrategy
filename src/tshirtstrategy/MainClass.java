@@ -5,10 +5,10 @@
  */
 package tshirtstrategy;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import tshirtstrategy.models.Color;
 import tshirtstrategy.models.Fabric;
 import tshirtstrategy.models.Size;
@@ -29,7 +29,7 @@ public class MainClass {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        TShirt tShirt = new TShirt("AAA", Color.ORANGE, Size.XL, Fabric.LINEN,11);
+        TShirt tShirt = new TShirt("AAA", Color.ORANGE, Size.XL, Fabric.LINEN, 11);
        
         System.out.println(" // ----------- //");
         List<IPayment> payments = Arrays.asList(new IPayment[] {new CardPaymentImpl(), new BankPaymentImpl(), new CashPaymentImpl()});   // new ArrayList<>();
@@ -37,6 +37,8 @@ public class MainClass {
         Context contextAll = new Context(payments);
         allPayments = contextAll.executePayments(tShirt.getPrice(), 
           tShirt.getColor(), tShirt.getSize(), tShirt.getFabric());
+        
+        HashMap<String, Float> allPayments2 = generateTShirtAndStategies();
         
         /*
             from HashMap<String, Float> tht is filled from executePayments....
@@ -55,7 +57,78 @@ public class MainClass {
         
         
         System.out.println(" // ----------- //");
+        
+        allPayments2.entrySet().forEach(
+            entry->
+            {
+                System.out.println(entry.getKey() + " Price: " + entry.getValue());  
+            });
+        
+        
+        System.out.println(" // ----------- //");
        
     }
     
+    public static HashMap<String, Float> generateTShirtAndStategies() {
+        // generate dynamically TShirts with all the implemented Payment strategies
+        // Random number 0 - 6
+        Color color = getRandomColor();
+        Size size = getRandomSize();
+        Fabric fabric = getRandomFabric();
+                
+        TShirt t1 = new TShirt(getRandomName(), color, size, fabric, getRandomNumberInRange(0,20));
+        List<IPayment> payments = Arrays.asList(new IPayment[] {new CardPaymentImpl(), new BankPaymentImpl(), new CashPaymentImpl()});   // new ArrayList<>();
+        HashMap<String, Float> allPayments = new HashMap<>();
+        Context contextAll = new Context(payments);
+        allPayments = contextAll.executePayments(t1.getPrice(), 
+          t1.getColor(), t1.getSize(), t1.getFabric());
+        return(allPayments);
+        
+    }
+    
+    public static String getRandomName() {
+        int leftLimit = 97; // letter 'a'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 10;
+        Random random = new Random();
+
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+          .limit(targetStringLength)
+          .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+          .toString();
+
+        return(generatedString);
+    }
+    
+    private static Color getRandomColor() {
+        Color color1 = Color.values()[getRandomNumberInRange(0,6)];
+//        Color[] colors = Color.values();
+//        Color color1 = null;
+//        for (Color color : colors) {
+//            if(getRandomNumberInRange(0,6) == color.ordinal()) {
+//                color1 = color;
+//            }
+//        }
+        return color1;
+    }
+    
+    private static Size getRandomSize() {
+        Size size1 = Size.values()[getRandomNumberInRange(0,6)];
+        return size1;
+    }
+    
+    private static Fabric getRandomFabric() {
+        Fabric fabric1 = Fabric.values()[getRandomNumberInRange(0,6)];
+        return fabric1;
+    }
+    
+    private static int getRandomNumberInRange(int min, int max) {
+
+	if (min >= max) {
+		throw new IllegalArgumentException("max must be greater than min");
+	}
+
+	Random r = new Random();
+	return r.nextInt((max - min) + 1) + min;
+    }
 }
